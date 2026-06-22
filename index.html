@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jung-Min Yoon — Research Portfolio</title>
+<style>
+  :root{
+    --ink:#0a0a0c;
+    --gray:#5b5d63;
+    --gray-light:#8b8d92;
+    --line:#e4e4e7;
+    --paper:#ffffff;
+    --blue:#2547ee;
+    --blue-dim:#eef0fd;
+    --mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+
+  /* ---------- Utility ---------- */
+  .wrap{max-width:1160px;margin:0 auto;padding:0 32px;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:13px;
+    letter-spacing:.08em;
+    color:var(--blue);
+    text-transform:uppercase;
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::after{
+    content:'';flex:1;height:1px;background:var(--line);
+  }
+  section{padding:120px 0;position:relative;}
+  @media (max-width:860px){ section{padding:72px 0;} }
+  h1,h2,h3{font-weight:800;letter-spacing:-0.02em;line-height:1.05;}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* ---------- Nav ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    background:rgba(255,255,255,.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1160px;margin:0 auto;padding:18px 32px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .nav-logo{font-family:var(--mono);font-size:13px;letter-spacing:.04em;font-weight:600;}
+  .nav-logo span{color:var(--blue);}
+  .nav-links{display:flex;gap:28px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;}
+  .nav-links a{color:var(--gray);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--blue);}
+  @media (max-width:680px){.nav-links{display:none;}}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex;align-items:center;
+    padding-top:80px;
+    position:relative;
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;
+  }
+  @media (max-width:860px){.hero-grid{grid-template-columns:1fr;gap:40px;}}
+  .hero-photo{
+    position:relative;
+    border-radius:2px;
+    overflow:hidden;
+    aspect-ratio:4/4.4;
+  }
+  .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center 20%;}
+  .track-line{
+    position:absolute;inset:0;width:100%;height:100%;
+    pointer-events:none;
+  }
+  .hero h1{font-size:clamp(48px,7vw,84px);}
+  .hero h1 .accent{color:var(--blue);}
+  .hero-role{font-size:18px;color:var(--gray);margin-top:20px;line-height:1.6;}
+  .hero-tag{
+    margin-top:40px;display:flex;align-items:center;gap:12px;
+    font-family:var(--mono);font-size:13px;color:var(--ink);
+  }
+  .dot{width:11px;height:11px;background:var(--blue);flex-shrink:0;}
+  .scroll-cue{
+    position:absolute;bottom:36px;left:32px;
+    font-family:var(--mono);font-size:11px;color:var(--gray-light);
+    display:flex;align-items:center;gap:8px;
+  }
+  .scroll-cue .bar{width:1px;height:28px;background:var(--gray-light);animation:scrollpulse 1.8s ease-in-out infinite;}
+  @keyframes scrollpulse{0%,100%{opacity:.2;}50%{opacity:1;}}
+
+  /* ---------- Statement ---------- */
+  .statement{background:var(--ink);color:#fff;}
+  .statement .eyebrow{color:#7d92ff;}
+  .statement .eyebrow::after{background:rgba(255,255,255,.15);}
+  .statement blockquote{
+    font-size:clamp(28px,4vw,46px);
+    font-weight:800;letter-spacing:-0.02em;line-height:1.25;
+    max-width:880px;
+  }
+  .statement blockquote .dim{color:#83858f;font-weight:700;}
+  .statement blockquote .hl{color:#7d92ff;}
+  .statement .by{
+    margin-top:48px;font-family:var(--mono);font-size:13px;color:#83858f;
+    letter-spacing:.04em;
+  }
+
+  /* ---------- About ---------- */
+  .about-grid{display:grid;grid-template-columns:340px 1fr;gap:64px;}
+  @media (max-width:860px){.about-grid{grid-template-columns:1fr;}}
+  .about-photo{border-radius:2px;overflow:hidden;}
+  .about-text p{font-size:17px;line-height:1.75;color:#2c2d31;margin-bottom:18px;max-width:620px;}
+  .about-facts{
+    margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:14px 36px;
+    font-size:14px;
+  }
+  .about-facts div{display:flex;align-items:baseline;gap:10px;}
+  .about-facts .sq{width:8px;height:8px;background:var(--blue);flex-shrink:0;}
+  .about-facts b{font-weight:600;}
+
+  /* ---------- Foundation / quote strip ---------- */
+  .foundation h2{font-size:clamp(32px,5vw,54px);max-width:780px;}
+  .foundation-photos{
+    display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:48px;
+  }
+  @media (max-width:680px){.foundation-photos{grid-template-columns:1fr;}}
+  .fphoto{position:relative;overflow:hidden;aspect-ratio:16/10;}
+  .fphoto img{width:100%;height:100%;object-fit:cover;}
+  .fphoto-cap{
+    position:absolute;bottom:0;left:0;right:0;
+    background:linear-gradient(transparent,rgba(0,0,0,.65));
+    color:#fff;font-family:var(--mono);font-size:11px;letter-spacing:.04em;
+    padding:28px 16px 12px;
+  }
+  .foundation-meta{
+    margin-top:18px;display:flex;gap:36px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:12px;color:var(--gray);
+  }
+  .foundation-note{
+    margin-top:28px;font-size:16px;font-style:italic;color:var(--gray);
+    border-left:2px solid var(--blue);padding-left:18px;
+  }
+
+  /* ---------- Pillars ---------- */
+  .pillars-grid{
+    margin-top:48px;display:grid;grid-template-columns:1fr 1fr;
+    border-top:1px solid var(--line);border-left:1px solid var(--line);
+  }
+  @media (max-width:680px){.pillars-grid{grid-template-columns:1fr;}}
+  .pillar{
+    border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:40px;
+  }
+  .pillar .num{font-family:var(--mono);color:var(--blue);font-size:13px;margin-bottom:14px;display:block;}
+  .pillar h3{font-size:22px;margin-bottom:10px;}
+  .pillar p{color:var(--gray);font-size:15px;line-height:1.6;}
+
+  /* ---------- Timeline ---------- */
+  .timeline{margin-top:64px;position:relative;}
+  .timeline-track{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative;
+  }
+  @media (max-width:680px){.timeline-track{grid-template-columns:1fr;gap:36px;}}
+  .timeline-line{
+    position:absolute;top:11px;left:0;right:0;height:1px;background:var(--line);
+  }
+  @media (max-width:680px){.timeline-line{display:none;}}
+  .tnode{position:relative;}
+  .tnode .yr{font-family:var(--mono);color:var(--blue);font-size:13px;margin-bottom:10px;}
+  .tnode .ball{width:13px;height:13px;border-radius:50%;background:var(--blue);margin-bottom:18px;position:relative;z-index:2;}
+  .tnode h3{font-size:26px;margin-bottom:6px;}
+  .tnode p{color:var(--gray);font-size:14.5px;line-height:1.5;}
+
+  /* ---------- Experience table ---------- */
+  .exp-row{
+    display:grid;grid-template-columns:110px 1fr 1.4fr;gap:24px;
+    padding:26px 0;border-bottom:1px solid var(--line);align-items:baseline;
+  }
+  @media (max-width:680px){.exp-row{grid-template-columns:1fr;gap:6px;}}
+  .exp-row .yr{font-family:var(--mono);color:var(--blue);font-size:15px;}
+  .exp-row h3{font-size:18px;font-weight:700;}
+  .exp-row p{color:var(--gray);font-size:14.5px;line-height:1.5;}
+  .exp-table{margin-top:48px;border-top:1px solid var(--ink);}
+
+  /* ---------- Publications ---------- */
+  .pub-row{
+    display:grid;grid-template-columns:130px 2fr 1fr;gap:30px;
+    padding:34px 0;border-bottom:1px solid var(--line);align-items:start;
+  }
+  @media (max-width:680px){.pub-row{grid-template-columns:1fr;gap:10px;}}
+  .pub-row:first-child{border-top:1px solid var(--ink);}
+  .pub-year{font-family:var(--mono);font-size:36px;font-weight:700;color:var(--blue);line-height:1;}
+  .pub-status{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--gray);margin-top:8px;}
+  .pub-title{font-size:19px;font-weight:700;line-height:1.4;}
+  .pub-tag{
+    display:inline-block;background:var(--blue);color:#fff;font-family:var(--mono);
+    font-size:10px;letter-spacing:.04em;padding:3px 8px;border-radius:3px;margin-left:8px;
+    vertical-align:middle;
+  }
+  .pub-journal{font-size:14.5px;color:var(--gray);line-height:1.5;}
+  .pub-journal b{color:var(--ink);display:block;font-weight:600;}
+
+  /* ---------- Project deep-dive ---------- */
+  .proj{background:#fafafa;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .proj-head{margin-bottom:48px;}
+  .proj-head .tag{font-family:var(--mono);font-size:12px;color:var(--blue);letter-spacing:.05em;}
+  .proj-head h3{font-size:clamp(24px,3.5vw,38px);margin-top:10px;}
+  .proj-head p.sub{color:var(--gray);font-size:15px;margin-top:8px;}
+  .proj-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media (max-width:860px){.proj-cards{grid-template-columns:1fr;}}
+  .proj-card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:26px;}
+  .proj-card h4{font-family:var(--mono);font-size:12px;letter-spacing:.05em;color:var(--gray-light);margin-bottom:14px;}
+  .proj-card p{font-size:15px;line-height:1.6;color:#2c2d31;}
+  .proj-card .hl{color:var(--blue);font-weight:600;}
+  .proj-photo{margin-top:36px;border-radius:4px;overflow:hidden;}
+  .proj-photo img{width:100%;}
+  .proj-photo-cap{font-family:var(--mono);font-size:11px;color:var(--gray-light);margin-top:10px;}
+
+  /* ---------- Toolbox ---------- */
+  .pipeline{
+    margin-top:48px;display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+    position:relative;
+  }
+  @media (max-width:860px){.pipeline{grid-template-columns:1fr;gap:14px;}}
+  .pstep{
+    border:1px solid var(--line);padding:26px 20px;position:relative;
+  }
+  .pipeline .pstep:not(:last-child){border-right:none;}
+  @media (max-width:860px){.pipeline .pstep{border-right:1px solid var(--line) !important;}}
+  .pstep h4{font-size:15px;font-weight:800;letter-spacing:-0.01em;margin-bottom:10px;line-height:1.25;}
+  .pstep p{font-family:var(--mono);font-size:12px;color:var(--gray);line-height:1.6;}
+  .pstep::after{
+    content:'→';position:absolute;right:-12px;top:50%;transform:translateY(-50%);
+    color:var(--blue);font-size:14px;z-index:2;background:#fff;width:20px;text-align:center;
+  }
+  .pipeline .pstep:last-child::after{content:'';}
+  @media (max-width:860px){.pstep::after{display:none;}}
+
+  /* ---------- Future / NRF ---------- */
+  .nrf{
+    border:1px solid var(--line);border-radius:4px;padding:48px;margin-top:48px;
+  }
+  @media (max-width:680px){.nrf{padding:28px;}}
+  .nrf-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;margin-bottom:36px;}
+  .nrf-badge{
+    border:1px solid var(--blue);color:var(--blue);font-family:var(--mono);
+    font-size:11px;letter-spacing:.05em;padding:6px 12px;border-radius:20px;white-space:nowrap;
+  }
+  .nrf h3{font-size:clamp(26px,3.5vw,38px);}
+  .nrf-body{display:grid;grid-template-columns:1fr 1fr;gap:48px;}
+  @media (max-width:860px){.nrf-body{grid-template-columns:1fr;gap:28px;}}
+  .nrf-body .label{font-weight:700;font-size:15px;margin-bottom:6px;}
+  .nrf-body p{color:var(--gray);font-size:14.5px;line-height:1.6;margin-bottom:22px;}
+  .nrf-body .hl{color:var(--blue);font-weight:600;}
+  .yr-block{display:flex;gap:16px;margin-bottom:28px;}
+  .yr-block .ball{width:11px;height:11px;border-radius:50%;background:var(--blue);margin-top:6px;flex-shrink:0;}
+  .yr-block h4{font-size:15px;font-weight:700;margin-bottom:6px;}
+  .yr-block p{font-size:14px;color:var(--gray);line-height:1.55;}
+
+  /* ---------- Beyond lab ---------- */
+  .translate{display:grid;grid-template-columns:1fr auto 1fr;gap:28px;align-items:center;margin-top:48px;}
+  @media (max-width:680px){.translate{grid-template-columns:1fr;}}
+  .tbox{border:1px solid var(--line);border-radius:4px;padding:32px;}
+  .tbox.lab{background:#fafafa;}
+  .tbox.real{background:var(--blue-dim);border-color:#c7d0fb;}
+  .tbox .pct{font-family:var(--mono);font-size:13px;color:var(--gray);margin-bottom:18px;}
+  .tbox.real .pct{color:var(--blue);}
+  .tbox h4{font-family:var(--mono);font-size:14px;letter-spacing:.05em;margin-bottom:16px;}
+  .tbox ul{list-style:none;font-size:14.5px;color:#2c2d31;line-height:2;}
+  .tbox.real ul{font-weight:500;}
+  .tarrow{font-size:28px;color:var(--blue);text-align:center;}
+  @media (max-width:680px){.tarrow{transform:rotate(90deg);}}
+  .translate-note{
+    margin-top:32px;font-style:italic;color:var(--gray);font-size:16px;
+  }
+
+  /* ---------- Mission cards ---------- */
+  .mission-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:48px;border-top:1px solid var(--line);}
+  @media (max-width:860px){.mission-grid{grid-template-columns:1fr;}}
+  .mcard{padding:36px 32px 36px 0;border-right:1px solid var(--line);}
+  .mcard:last-child{border-right:none;}
+  @media (max-width:860px){.mcard{border-right:none;border-bottom:1px solid var(--line);padding:28px 0;}}
+  .mcard .num{font-family:var(--mono);color:var(--blue);font-size:13px;}
+  .mcard h3{font-size:21px;margin:12px 0 10px;}
+  .mcard p{color:var(--gray);font-size:14.5px;line-height:1.6;}
+  .mission-line{
+    margin-top:44px;font-size:clamp(20px,2.6vw,28px);font-weight:700;line-height:1.4;max-width:880px;
+  }
+  .mission-line .hl{color:var(--blue);}
+
+  /* ---------- Contact ---------- */
+  .contact{background:var(--ink);color:#fff;}
+  .contact .eyebrow{color:#7d92ff;}
+  .contact .eyebrow::after{background:rgba(255,255,255,.15);}
+  .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:64px;align-items:center;}
+  @media (max-width:860px){.contact-grid{grid-template-columns:1fr;gap:40px;}}
+  .contact-photo{border-radius:2px;overflow:hidden;}
+  .contact h2{font-size:clamp(40px,6vw,64px);color:#fff;}
+  .contact-sub{color:#a7a9b3;font-size:17px;margin-top:16px;line-height:1.6;max-width:480px;}
+  .clist{margin-top:40px;}
+  .crow{
+    display:grid;grid-template-columns:110px 1fr;padding:18px 0;
+    border-bottom:1px solid rgba(255,255,255,.12);align-items:baseline;
+  }
+  .crow .k{font-family:var(--mono);font-size:12px;color:#7d92ff;letter-spacing:.05em;}
+  .crow .v{font-size:17px;font-weight:600;}
+  .crow .v a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.3);}
+  .crow .v a:hover{border-color:#fff;}
+  .closing{margin-top:44px;font-size:20px;font-weight:700;}
+  .closing .hl{color:#7d92ff;}
+  footer{
+    background:var(--ink);color:#5e6072;text-align:center;font-family:var(--mono);
+    font-size:11px;letter-spacing:.05em;padding:28px 0;border-top:1px solid rgba(255,255,255,.08);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">JUNG-MIN YOON <span>/ KNSU</span></div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#projects">Projects</a>
+      <a href="#future">Future</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal in">
+      <div class="eyebrow">Research Portfolio / 2026</div>
+      <h1>Jung-Min<br><span class="accent">Yoon</span></h1>
+      <p class="hero-role">Ph.D. Candidate, Sport Biomechanics<br>Motion Innovation Center<br>Korea National Sport University</p>
+      <div class="hero-tag"><span class="dot"></span> From elite ice to everyday mobility</div>
+    </div>
+    <div class="hero-photo reveal in">
+      <img src="images/hero_skater.jpg" alt="Jung-Min Yoon speed skating">
+    </div>
+  </div>
+  <div class="scroll-cue"><span class="bar"></span> SCROLL</div>
+</header>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <div class="wrap">
+    <div class="eyebrow reveal">01 / Opening Statement</div>
+    <blockquote class="reveal">
+      <span class="dim">"I do not aspire to be a researcher who simply publishes scientific papers.</span><br>
+      I aspire to research that creates <span class="hl">meaningful</span> and <span class="hl">tangible benefits</span> for people's lives."
+    </blockquote>
+    <div class="by reveal">— JUNG-MIN YOON, RESEARCH VISION</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="eyebrow reveal">02 / About</div>
+    <div class="about-grid">
+      <div class="about-photo reveal">
+        <img src="images/about_skater.jpg" alt="Jung-Min Yoon on the ice">
+      </div>
+      <div class="reveal">
+        <h2 style="font-size:clamp(36px,5vw,56px);margin-bottom:28px;">About Me</h2>
+        <div class="about-text">
+          <p>I am Jung-Min Yoon, a Ph.D. student in Biomechanics at Korea National Sport University (KNSU). I currently conduct research at the Motion Innovation Center under the supervision of Prof. Sang-Kyoon Park, focusing on the biomechanical characteristics of human movement.</p>
+          <p>My work spans sports biomechanics, gait analysis, wearable sensor technologies, and digital health, with the goal of improving athletic performance, preventing falls, and promoting health and well-being.</p>
+        </div>
+        <div class="about-facts">
+          <div><span class="sq"></span><b>Ph.D. Candidate</b> — 2025–Present</div>
+          <div><span class="sq"></span><b>KNSU</b> — Seoul, Korea</div>
+          <div><span class="sq"></span><b>Motion Innovation Center</b></div>
+          <div><span class="sq"></span><b>Advisor</b> — Prof. Sang-Kyoon Park</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ATHLETIC FOUNDATION -->
+<section class="foundation" style="background:#fafafa;border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="eyebrow reveal">03 / Athletic Foundation</div>
+    <h2 class="reveal">My research begins where my body once raced.</h2>
+    <div class="foundation-photos reveal">
+      <div class="fphoto">
+        <img src="images/training1.jpg" alt="KNSU training, Seoul">
+        <div class="fphoto-cap">KNSU TRAINING — SEOUL</div>
+      </div>
+      <div class="fphoto">
+        <img src="images/training2.jpg" alt="Korean National Team, 2018">
+        <div class="fphoto-cap">KOREAN NATIONAL TEAM — 2018</div>
+      </div>
+    </div>
+    <div class="foundation-meta reveal">
+      <div>■ 2018 — Korean National Speed Skating Team (Summer)</div>
+      <div>■ 2015–2016 — Short Track National Reserve Team</div>
+    </div>
+    <p class="foundation-note reveal">Twelve years of competitive skating shape how I see, measure, and model human movement today.</p>
+  </div>
+</section>
+
+<!-- RESEARCH FOCUS -->
+<section id="research">
+  <div class="wrap">
+    <div class="eyebrow reveal">04 / Research Focus</div>
+    <h2 class="reveal" style="font-size:clamp(32px,5vw,52px);">Four pillars of inquiry</h2>
+    <p class="reveal" style="color:var(--gray);font-size:17px;margin-top:14px;max-width:640px;">Where elite-sport biomechanics meets everyday movement and emerging sensing technology.</p>
+    <div class="pillars-grid reveal">
+      <div class="pillar">
+        <span class="num">01</span>
+        <h3>Sports Biomechanics</h3>
+        <p>Performance analysis of elite athletes through 3D motion capture and force-plate measurement.</p>
+      </div>
+      <div class="pillar">
+        <span class="num">02</span>
+        <h3>Gait Analysis</h3>
+        <p>Lower-limb kinematics, kinetics, and inter-joint coordination across ages and terrains.</p>
+      </div>
+      <div class="pillar">
+        <span class="num">03</span>
+        <h3>Wearable Sensors</h3>
+        <p>Smartwatch, EEG, and IMU-based assessment of movement and physiology beyond the laboratory.</p>
+      </div>
+      <div class="pillar">
+        <span class="num">04</span>
+        <h3>Digital Health</h3>
+        <p>Data-driven systems for fall prevention, gait training, and quality-of-life improvement.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section style="background:#fafafa;border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="eyebrow reveal">05 / Academic Trajectory</div>
+    <h2 class="reveal" style="font-size:clamp(28px,4.4vw,46px);">A decade at Korea National Sport University</h2>
+    <p class="reveal" style="color:var(--gray);font-size:16px;margin-top:12px;">From competitive ice skater to biomechanist — eight years and counting, one institution.</p>
+    <div class="timeline reveal">
+      <div class="timeline-track">
+        <div class="timeline-line"></div>
+        <div class="tnode">
+          <div class="ball"></div>
+          <div class="yr">2018 – 2021</div>
+          <h3>B.S.</h3>
+          <p>Department of Physical Education, Ice Skating Major</p>
+        </div>
+        <div class="tnode">
+          <div class="ball"></div>
+          <div class="yr">2021 – 2024</div>
+          <h3>M.S.</h3>
+          <p>Sport Biomechanics, Motion Innovation Center</p>
+        </div>
+        <div class="tnode">
+          <div class="ball"></div>
+          <div class="yr">2025 – Present</div>
+          <h3>Ph.D.</h3>
+          <p>Sport Biomechanics, Motion Innovation Center</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow reveal">06 / Research Experience</div>
+    <h2 class="reveal" style="font-size:clamp(28px,4.4vw,46px);">Four research projects, hands-on</h2>
+    <p class="reveal" style="color:var(--gray);font-size:16px;margin-top:12px;">Applied biomechanics work conducted as a research assistant at the Motion Innovation Center.</p>
+    <div class="exp-table reveal">
+      <div class="exp-row">
+        <div class="yr">2024</div>
+        <h3>Recovery Footwear Validation</h3>
+        <p>Physiological and biomechanical functional verification — Research Assistant</p>
+      </div>
+      <div class="exp-row">
+        <div class="yr">2023</div>
+        <h3>Walking-Shoe Biomechanical Evaluation</h3>
+        <p>Fit and biomechanical outcome assessment — Research Assistant</p>
+      </div>
+      <div class="exp-row">
+        <div class="yr">2022–24</div>
+        <h3>Interactive Metronome &amp; Gait Stability</h3>
+        <p>Effects of cadence cueing on selective attention and gait — Research Assistant</p>
+      </div>
+      <div class="exp-row">
+        <div class="yr">2022–24</div>
+        <h3>App-Linked Custom In-Store Insoles</h3>
+        <p>Development of on-demand customized insole system — Research Assistant</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section style="background:#fafafa;border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="eyebrow reveal">07 / Publications</div>
+    <h2 class="reveal" style="font-size:clamp(28px,4.4vw,46px);">Published evidence</h2>
+    <p class="reveal" style="color:var(--gray);font-size:16px;margin-top:12px;">Two peer-reviewed journal articles — translating laboratory biomechanics into the published record.</p>
+
+    <div class="reveal">
+      <div class="pub-row">
+        <div>
+          <div class="pub-year">2025</div>
+          <div class="pub-status">PEER REVIEWED</div>
+        </div>
+        <div class="pub-title">Biomechanical Effects of Foot-Direction Angle on Lower-Limb Joints during Side-Step Cutting <span class="pub-tag">FIRST AUTHOR</span></div>
+        <div class="pub-journal"><b>Sports Science</b>Vol. 43, p. 327</div>
+      </div>
+      <div class="pub-row">
+        <div>
+          <div class="pub-year">2024</div>
+          <div class="pub-status">PEER REVIEWED</div>
+        </div>
+        <div class="pub-title">Biomechanical Changes Over Time during Slide-Board Training in Sprint Speed Skaters <span class="pub-tag">FIRST AUTHOR</span></div>
+        <div class="pub-journal"><b>Korean Journal of Sport Science</b>Vol. 35, pp. 401–411</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT I -->
+<section class="proj" id="projects">
+  <div class="wrap">
+    <div class="proj-head reveal">
+      <div class="tag">PROJECT I — PUBLISHED 2024</div>
+      <h3>Sprint speed skaters change over time</h3>
+      <p class="sub">Biomechanical changes across repeated strokes during slide-board training — Korean Journal of Sport Science, Vol. 35, pp. 401–411</p>
+    </div>
+    <div class="proj-cards reveal">
+      <div class="proj-card">
+        <h4>QUESTION</h4>
+        <p>Do lower-limb joint kinetics drift across consecutive slide-board strokes in elite sprint speed skaters?</p>
+      </div>
+      <div class="proj-card">
+        <h4>METHOD</h4>
+        <p>3D motion capture and inverse dynamics — first, middle, and last strokes compared across the training set.</p>
+      </div>
+      <div class="proj-card">
+        <h4>FINDING</h4>
+        <p><span class="hl">Ankle plantarflexion moment</span> and <span class="hl">knee/hip extensor moments progressively decline</span> from First to Last strokes — quantifying within-session neuromuscular drift in elite skaters.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT II -->
+<section class="proj" style="background:#fff;">
+  <div class="wrap">
+    <div class="proj-head reveal">
+      <div class="tag">PROJECT II — PUBLISHED 2025</div>
+      <h3>Foot angle changes how knees absorb impact</h3>
+      <p class="sub">Biomechanical effects of foot-direction angle on lower-limb joints during side-step cutting — Sports Science, Vol. 43, p. 327</p>
+    </div>
+    <div class="proj-cards reveal">
+      <div class="proj-card">
+        <h4>BRAKING PHASE</h4>
+        <p>Ankle dorsiflexion/plantarflexion angle and moment, knee/hip flexion-extension moment, and side-step phase time all shift with <span class="hl">toe-in</span> and <span class="hl">toe-out</span> stance.</p>
+      </div>
+      <div class="proj-card">
+        <h4>PROPULSION PHASE</h4>
+        <p>Ankle and knee angle, moment, and power responses reorganize depending on foot-direction condition during push-off.</p>
+      </div>
+      <div class="proj-card">
+        <h4>SETUP</h4>
+        <p>Foot angle set with a digital protractor across Neutral, Toe-in, and Toe-out conditions, with a fixed 240 cm side-step distance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT III -->
+<section class="proj" style="background:#fafafa;">
+  <div class="wrap">
+    <div class="proj-head reveal">
+      <div class="tag">PROJECT III — IN PROGRESS</div>
+      <h3>Aging changes how we walk downhill</h3>
+      <p class="sub">Lower-extremity biomechanics and inter-joint coordination during downhill walking in younger versus older women.</p>
+    </div>
+    <div class="proj-cards reveal">
+      <div class="proj-card">
+        <h4>QUESTION</h4>
+        <p>How do lower-extremity joint kinematics, kinetics, and inter-joint coordination differ between younger and older women during downhill walking?</p>
+      </div>
+      <div class="proj-card">
+        <h4>METHOD</h4>
+        <p>Instrumented split-belt treadmill at controlled downhill grade, full-body 3D motion capture, EMG, force plates, paired younger and older female cohorts.</p>
+      </div>
+      <div class="proj-card">
+        <h4>OUTCOMES</h4>
+        <p><span class="hl">Joint-level age effects</span> on ankle, knee, and hip during the downhill weight-acceptance phase; <span class="hl">inter-joint coordination variability</span> as a fall-risk indicator.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLBOX -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow reveal">08 / Methodological Toolbox</div>
+    <h2 class="reveal" style="font-size:clamp(28px,4.4vw,46px);">The toolbox behind the data</h2>
+    <p class="reveal" style="color:var(--gray);font-size:16px;margin-top:12px;max-width:640px;">From raw motion capture to published findings — measurement and analysis across the biomechanics pipeline.</p>
+    <div class="pipeline reveal">
+      <div class="pstep"><h4>DATA CAPTURE</h4><p>3D MOTION CAPTURE<br>FORCE PLATES / EMG</p></div>
+      <div class="pstep"><h4>WEARABLE SENSING</h4><p>IMU / SMARTWATCH<br>EEG</p></div>
+      <div class="pstep"><h4>PROCESSING</h4><p>VISUAL3D<br>MATLAB</p></div>
+      <div class="pstep"><h4>ANALYSIS</h4><p>INVERSE DYNAMICS<br>KINEMATIC COUPLING</p></div>
+      <div class="pstep"><h4>OUTPUT</h4><p>PUBLICATION<br>APPLIED INSIGHT</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- NRF FUNDING -->
+<section id="future" style="background:#fafafa;border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="eyebrow reveal">Toward the Wearable Future</div>
+    <h2 class="reveal" style="font-size:clamp(28px,4.4vw,46px);max-width:740px;">Where biomechanics meets wearable sensing and immersive virtual environments</h2>
+    <p class="reveal" style="color:var(--gray);font-size:16px;margin-top:14px;max-width:640px;">Building evidence-based tools for fall prevention and personalized gait training.</p>
+
+    <div class="nrf reveal">
+      <div class="nrf-top">
+        <h3>Funded by the NRF, 2025 — 2027</h3>
+        <span class="nrf-badge">NRF GRANT / 2025–2027</span>
+      </div>
+      <div class="nrf-body">
+        <div>
+          <div class="label">Project</div>
+          <p>A Study on the Improvement of Gait Stability and Neurophysiological Function in Middle-Aged Adults Using Wearable Devices and Virtual Reality Systems.</p>
+          <div class="label">Funding</div>
+          <p>National Research Foundation of Korea — Doctoral Research Grant in Humanities and Social Sciences, 2-year program.</p>
+          <div class="label">Goal</div>
+          <p><span class="hl">Build evidence-based strategies for fall prevention and personalized gait training before age-related decline becomes severe.</span></p>
+        </div>
+        <div>
+          <div class="yr-block">
+            <div class="ball"></div>
+            <div>
+              <h4>YEAR 1 — 2025–2026</h4>
+              <p>Compare gait between young and middle-aged adults across flat ground, uneven terrain, and visually distracting environments. Wearable smartwatch + EEG measurements.</p>
+            </div>
+          </div>
+          <div class="yr-block">
+            <div class="ball"></div>
+            <div>
+              <h4>YEAR 2 — 2026–2027</h4>
+              <p>Introduce real-time visual feedback through head-mounted VR and measure its effect on gait stability and neurophysiological response.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEYOND THE LAB -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow reveal">09 / Research Vision</div>
+    <h2 class="reveal" style="font-size:clamp(28px,4.4vw,46px);">Beyond the laboratory</h2>
+    <p class="reveal" style="color:var(--gray);font-size:16px;margin-top:12px;max-width:640px;">Translating biomechanics and wearable technology into real-world tools for human movement.</p>
+
+    <div class="translate reveal">
+      <div class="tbox lab">
+        <div class="pct">35%</div>
+        <h4>LABORATORY</h4>
+        <ul>
+          <li>Controlled measurement</li>
+          <li>Motion capture</li>
+          <li>Treadmill protocols</li>
+          <li>3D kinematics</li>
+          <li>Force plates</li>
+        </ul>
+      </div>
+      <div class="tarrow">→</div>
+      <div class="tbox real">
+        <div class="pct">50%</div>
+        <h4>REAL WORLD</h4>
+        <ul>
+          <li>Movement analysis beyond the laboratory bench</li>
+          <li>Digital biomarkers for athletic performance and clinical mobility</li>
+          <li>Assistive technologies for individuals with mobility limitations</li>
+        </ul>
+      </div>
+    </div>
+    <p class="translate-note reveal">I aspire to be a researcher whose findings are not only published, but lived.</p>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section style="background:#fafafa;border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="eyebrow reveal">10 / Future Goals</div>
+    <h2 class="reveal" style="font-size:clamp(28px,4.4vw,46px);">Mobility, independence, quality of life</h2>
+    <p class="reveal" style="color:var(--gray);font-size:16px;margin-top:12px;max-width:640px;">Three populations, one mission — research engineered to leave the lab and meet real lives.</p>
+    <div class="mission-grid reveal">
+      <div class="mcard">
+        <span class="num">01</span>
+        <h3>Older Adults</h3>
+        <p>Fall prevention, gait training, and personalized mobility assessment before age-related decline becomes severe.</p>
+      </div>
+      <div class="mcard">
+        <span class="num">02</span>
+        <h3>Patients</h3>
+        <p>Rehabilitation-engineering tools that move beyond clinical visits into daily-life monitoring and intervention.</p>
+      </div>
+      <div class="mcard">
+        <span class="num">03</span>
+        <h3>Individuals with Disabilities</h3>
+        <p>Assistive movement technologies that increase independence, safety, and participation in everyday activities.</p>
+      </div>
+    </div>
+    <p class="mission-line reveal">Research should not stop at the laboratory door — <span class="hl">it should reach the people whose lives it can change.</span></p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="eyebrow">11 / Let's Connect</div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="contact-photo">
+          <img src="images/contact_skater.jpg" alt="Jung-Min Yoon">
+        </div>
+      </div>
+      <div class="reveal">
+        <h2>Let's connect</h2>
+        <p class="contact-sub">I welcome collaborations across biomechanics, wearable technology, and digital health.</p>
+        <div class="clist">
+          <div class="crow"><div class="k">NAME</div><div class="v">Jung-Min Yoon</div></div>
+          <div class="crow"><div class="k">EMAIL</div><div class="v"><a href="mailto:handsomepizza99@gmail.com">handsomepizza99@gmail.com</a></div></div>
+          <div class="crow"><div class="k">PHONE</div><div class="v">+82-10-8461-0330</div></div>
+          <div class="crow"><div class="k">AFFILIATION</div><div class="v">Motion Innovation Center, KNSU</div></div>
+        </div>
+        <p class="closing">From <span class="hl">elite ice</span> to <span class="hl">everyday mobility</span> — thank you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>RESEARCH PORTFOLIO / 2026 / END</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); }
+    });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+
+</body>
+</html>
